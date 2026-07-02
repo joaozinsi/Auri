@@ -356,7 +356,7 @@ const GlobalStyle = () => (
     .auri-footer { padding: 56px 0 36px; }
     .auri-footer-top { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; margin-bottom: 40px; }
     .auri-footer-col h4 { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bronze-dark); margin-bottom: 14px; }
-    .auri-footer-col a, .auri-footer-col p { display: block; font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+    .auri-footer-col a, .auri-footer-col p, .auri-footer-static { display: block; font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
     .auri-footer-col a { width: fit-content; transition: color 0.2s ease; }
     .auri-footer-col a:hover { color: var(--patina); text-decoration: underline; }
     .auri-footer-bottom {
@@ -551,10 +551,10 @@ export default function App() {
       <section className="auri-hero" id="top">
         <div className="auri-hero-copy">
           <span className="eyebrow">Marketplace de joias autorais</span>
-          <h1>Peças raras, <em>fotografadas</em>{" "}<br />como merecem.</h1>
+          <h1>Peças raras,<br /><em>como você merece.</em></h1>
           <p className="auri-hero-sub">
-            A Auri reúne ateliês independentes de todo o Brasil em uma única loja —
-            com fotografia de produto cuidada e um checkout que cabe numa tela só.
+            A Auri reúne ateliês independentes de todo o Brasil em uma única loja,
+            que cabe numa tela só.
           </p>
           <a href="#colecao" className="auri-hero-cta">Ver coleção <ArrowRight size={15} /></a>
           <div className="auri-hero-stats">
@@ -635,8 +635,8 @@ export default function App() {
           <div className="auri-checkout-grid">
             <div>
               <span className="eyebrow">Como funciona</span>
-              <h2>Checkout em uma tela, do jeito que deveria ser.</h2>
-              <p className="lead">Sem etapas escondidas, sem redirecionar para outro site. A pessoa vê tudo — itens, entrega e pagamento — antes de confirmar.</p>
+              <h2>Pagamento em uma tela, do jeito que deveria ser.</h2>
+              <p className="lead">Sem etapas escondidas, sem redirecionar para outro site.</p>
               <ul className="auri-checkout-list">
                 <li>
                   <span className="n">1</span>
@@ -724,7 +724,7 @@ export default function App() {
             </div>
             <div className="auri-footer-col">
               <h4>Contato</h4>
-              <a href="https://www.instagram.com/auri.joias" target="_blank" rel="noreferrer"><Instagram size={13} style={{ verticalAlign: "-2px", marginRight: 6 }} />@auri.joias</a>
+              <span className="auri-footer-static"><Instagram size={13} style={{ verticalAlign: "-2px", marginRight: 6 }} />@auri.joias</span>
               <a href="mailto:contato@auri.com.br">contato@auri.com.br</a>
             </div>
           </div>
