@@ -202,14 +202,18 @@ const GlobalStyle = () => (
       border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
       background: var(--paper-2); overflow: hidden; padding: 16px 0;
     }
-    .auri-marquee-track { display: flex; width: max-content; animation: auri-scroll 32s linear infinite; }
+    .auri-marquee-track {
+      display: flex; width: max-content;
+      animation: auri-scroll 34s linear infinite; will-change: transform;
+    }
     .auri-marquee-track span {
-      font-family: 'Italiana'; font-size: 20px; padding: 0 40px; white-space: nowrap;
-      color: var(--ink-soft); display: flex; align-items: center; gap: 40px;
+      font-family: 'Italiana'; font-size: clamp(16px, 1.6vw, 20px);
+      padding: 0 clamp(24px, 3vw, 40px); white-space: nowrap;
+      color: var(--ink-soft); display: flex; align-items: center; gap: clamp(24px, 3vw, 40px);
     }
     .auri-marquee-track span::after { content: '·'; color: var(--bronze); font-size: 20px; }
-    @keyframes auri-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    @media (prefers-reduced-motion: reduce) { .auri-marquee-track { animation: none; } }
+    @keyframes auri-scroll { from { transform: translateX(0); } to { transform: translateX(-16.6667%); } }
+    @media (prefers-reduced-motion: reduce) { .auri-marquee-track { animation-duration: 72s; } }
 
     /* ---------- section heads ---------- */
     .auri-section { padding: 96px 0; }
@@ -463,16 +467,9 @@ const GlobalStyle = () => (
       .auri-logo { font-size: 24px; }
       .auri-cart-btn { padding: 9px 12px; }
       .auri-nav-links { gap: 18px; font-size: 12px; }
-      .auri-marquee-band { overflow: visible; padding: 14px 0; }
-      .auri-marquee-track {
-        width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px 12px;
-        animation: none; transform: none; padding: 0 20px;
-      }
-      .auri-marquee-track span {
-        padding: 0; font-size: 16px; gap: 0;
-      }
-      .auri-marquee-track span::after,
-      .auri-marquee-track span:nth-child(n+7) { display: none; }
+      .auri-marquee-band { padding: 13px 0; }
+      .auri-marquee-track { animation-duration: 24s; }
+      .auri-marquee-track span { padding: 0 24px; gap: 24px; }
       .auri-grid { grid-template-columns: 1fr; }
       .auri-card.featured { grid-column: span 1; }
       .auri-drawer { width: 100%; }
@@ -585,9 +582,9 @@ export default function App() {
       </section>
 
       {/* MARQUEE */}
-      <div className="auri-marquee-band" id="marcas">
-        <div className="auri-marquee-track">
-          {[...BRANDS, ...BRANDS, ...BRANDS].map((b, i) => (
+      <div className="auri-marquee-band" id="marcas" aria-label={`Marcas parceiras: ${BRANDS.join(", ")}`}>
+        <div className="auri-marquee-track" aria-hidden="true">
+          {[...BRANDS, ...BRANDS, ...BRANDS, ...BRANDS, ...BRANDS, ...BRANDS].map((b, i) => (
             <span key={i}>{b}</span>
           ))}
         </div>
