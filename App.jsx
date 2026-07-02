@@ -463,6 +463,16 @@ const GlobalStyle = () => (
       .auri-logo { font-size: 24px; }
       .auri-cart-btn { padding: 9px 12px; }
       .auri-nav-links { gap: 18px; font-size: 12px; }
+      .auri-marquee-band { overflow: visible; padding: 14px 0; }
+      .auri-marquee-track {
+        width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px 12px;
+        animation: none; transform: none; padding: 0 20px;
+      }
+      .auri-marquee-track span {
+        padding: 0; font-size: 16px; gap: 0;
+      }
+      .auri-marquee-track span::after,
+      .auri-marquee-track span:nth-child(n+7) { display: none; }
       .auri-grid { grid-template-columns: 1fr; }
       .auri-card.featured { grid-column: span 1; }
       .auri-drawer { width: 100%; }
@@ -683,7 +693,7 @@ export default function App() {
             <div className="auri-about-copy">
               <span className="eyebrow">Sobre a Auri</span>
               <h2>Uma vitrine para quem faz joia com as próprias mãos.</h2>
-              <p>Cada marca na Auri é um ateliê pequeno — sem estoque de fábrica, sem coleção genérica. A gente cuida da parte que elas não têm tempo de cuidar: fotografia de produto, catálogo e um checkout que não afasta quem já decidiu comprar.</p>
+              <p>Cada marca na Auri é um ateliê pequeno — sem estoque de fábrica, sem coleção genérica. A gente cuida da parte que elas não têm tempo de cuidar: fotografia de produto, catálogo e formas de pagamento que não afasta quem já decidiu comprar.</p>
               <p>O resultado é uma loja onde cada peça é fotografada com a mesma atenção que teve para ser feita.</p>
             </div>
           </div>
