@@ -673,7 +673,8 @@ const GlobalStyle = () => (
     .auri-card { grid-column: span 3; gap: 14px; }
     .auri-card.featured { grid-column: span 6; grid-row: span 2; }
     .auri-card:nth-child(3) { margin-top: 54px; }
-    .auri-card:nth-child(6) { margin-top: 24px; }
+    .auri-card:nth-child(6),
+    .auri-card:nth-child(7) { margin-top: clamp(-260px, -18vw, -150px); }
     .auri-card-media {
       background: #D8CCBA; border: 1px solid var(--dark-line);
       aspect-ratio: 3 / 4; border-radius: 3px;
@@ -788,7 +789,8 @@ const GlobalStyle = () => (
       .auri-card,
       .auri-card.featured { grid-column: span 1; }
       .auri-card:nth-child(3),
-      .auri-card:nth-child(6) { margin-top: 0; }
+      .auri-card:nth-child(6),
+      .auri-card:nth-child(7) { margin-top: 0; }
       .auri-checkout-list { grid-template-columns: 1fr; }
       .auri-about-media { order: 1; }
       .auri-about-copy { order: 2; }
