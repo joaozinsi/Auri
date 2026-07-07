@@ -514,8 +514,8 @@ const GlobalStyle = () => (
       to { transform: scale(1.24) translate3d(-1.2%, -18%, 0); }
     }
     @keyframes auri-hero-coroa-drift {
-      from { transform: scale(1.12) translate3d(0, -4%, 0); }
-      to { transform: scale(1.18) translate3d(-1%, -7%, 0); }
+      from { transform: scale(1.13) translate3d(0, -7%, 0); }
+      to { transform: scale(1.2) translate3d(-1%, -10%, 0); }
     }
     @keyframes auri-hero-riacho-drift {
       from { transform: scale(1.08) translate3d(0, 2%, 0); }
@@ -569,7 +569,7 @@ const GlobalStyle = () => (
     .auri-hero-media .auri-photo-hero-p5 { object-position: center 57%; }
     .auri-hero-media .auri-photo-hero-p7 { object-position: center 58%; }
     .auri-hero-media .auri-photo-colares { object-position: center 100%; }
-    .auri-hero-media .auri-photo-coroa { object-position: center 82%; }
+    .auri-hero-media .auri-photo-coroa { object-position: center 90%; }
     .auri-hero-media .auri-photo-riacho { object-position: center 88%; }
     .auri-hero-slide {
       position: absolute; inset: 0; opacity: 0; transform: scale(1.01);
