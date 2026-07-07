@@ -669,11 +669,11 @@ const GlobalStyle = () => (
       border-color: var(--dark-line); border-radius: 2px; background: rgba(247,240,230,0.35);
     }
 
-    .auri-grid { grid-template-columns: repeat(12, 1fr); gap: 26px; }
+    .auri-grid { grid-template-columns: repeat(12, 1fr); gap: 20px 24px; align-items: start; }
     .auri-card { grid-column: span 3; gap: 14px; }
     .auri-card.featured { grid-column: span 6; grid-row: span 2; }
-    .auri-card:nth-child(3),
-    .auri-card:nth-child(6) { margin-top: 72px; }
+    .auri-card:nth-child(3) { margin-top: 54px; }
+    .auri-card:nth-child(6) { margin-top: 24px; }
     .auri-card-media {
       background: #D8CCBA; border: 1px solid var(--dark-line);
       aspect-ratio: 3 / 4; border-radius: 3px;
