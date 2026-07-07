@@ -513,6 +513,10 @@ const GlobalStyle = () => (
       from { transform: scale(1.16) translate3d(0, -12%, 0); }
       to { transform: scale(1.24) translate3d(-1.2%, -18%, 0); }
     }
+    @keyframes auri-hero-coroa-drift {
+      from { transform: scale(1.12) translate3d(0, -4%, 0); }
+      to { transform: scale(1.18) translate3d(-1%, -7%, 0); }
+    }
     @keyframes auri-hero-riacho-drift {
       from { transform: scale(1.08) translate3d(0, 2%, 0); }
       to { transform: scale(1.14) translate3d(-1%, -4%, 0); }
@@ -565,6 +569,7 @@ const GlobalStyle = () => (
     .auri-hero-media .auri-photo-hero-p5 { object-position: center 57%; }
     .auri-hero-media .auri-photo-hero-p7 { object-position: center 58%; }
     .auri-hero-media .auri-photo-colares { object-position: center 100%; }
+    .auri-hero-media .auri-photo-coroa { object-position: center 82%; }
     .auri-hero-media .auri-photo-riacho { object-position: center 88%; }
     .auri-hero-slide {
       position: absolute; inset: 0; opacity: 0; transform: scale(1.01);
@@ -573,6 +578,7 @@ const GlobalStyle = () => (
     .auri-hero-slide.active { opacity: 1; transform: scale(1); z-index: 1; }
     .auri-hero-slide.active .auri-photo { animation: auri-hero-drift 5.2s ease-in-out both; }
     .auri-hero-slide.active .auri-photo-colares { animation-name: auri-hero-necklace-drift; }
+    .auri-hero-slide.active .auri-photo-coroa { animation-name: auri-hero-coroa-drift; }
     .auri-hero-slide.active .auri-photo-riacho { animation-name: auri-hero-riacho-drift; }
     .auri-hero-reel {
       position: absolute; left: 46px; right: 46px; bottom: 24px; z-index: 4;
@@ -968,6 +974,7 @@ export default function App() {
                 alt={index === activeHeroIndex ? `${product.name} em fotografia editorial` : ""}
                 className={[
                   product.id === "p2" ? "auri-photo-riacho" : "",
+                  product.id === "p4" ? "auri-photo-coroa" : "",
                   ["p1", "p3", "p5", "p7"].includes(product.id) ? `auri-photo-hero-${product.id}` : "",
                 ].filter(Boolean).join(" ")}
                 eager
