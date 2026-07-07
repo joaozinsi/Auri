@@ -513,6 +513,10 @@ const GlobalStyle = () => (
       from { transform: scale(1.16) translate3d(0, -12%, 0); }
       to { transform: scale(1.24) translate3d(-1.2%, -18%, 0); }
     }
+    @keyframes auri-hero-riacho-drift {
+      from { transform: scale(1.08) translate3d(0, 2%, 0); }
+      to { transform: scale(1.14) translate3d(-1%, -4%, 0); }
+    }
     @keyframes auri-shimmer-line {
       from { transform: translateX(-100%); }
       to { transform: translateX(100%); }
@@ -556,6 +560,7 @@ const GlobalStyle = () => (
       filter: saturate(0.9) contrast(1.08);
     }
     .auri-hero-media .auri-photo-colares { object-position: center 100%; }
+    .auri-hero-media .auri-photo-riacho { object-position: center 88%; }
     .auri-hero-slide {
       position: absolute; inset: 0; opacity: 0; transform: scale(1.01);
       transition: opacity 1.1s ease, transform 1.1s ease;
@@ -563,6 +568,7 @@ const GlobalStyle = () => (
     .auri-hero-slide.active { opacity: 1; transform: scale(1); z-index: 1; }
     .auri-hero-slide.active .auri-photo { animation: auri-hero-drift 5.2s ease-in-out both; }
     .auri-hero-slide.active .auri-photo-colares { animation-name: auri-hero-necklace-drift; }
+    .auri-hero-slide.active .auri-photo-riacho { animation-name: auri-hero-riacho-drift; }
     .auri-hero-reel {
       position: absolute; left: 46px; right: 46px; bottom: 24px; z-index: 4;
       display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 9px;
@@ -589,6 +595,7 @@ const GlobalStyle = () => (
     }
     .auri-reel-media .auri-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
     .auri-reel-media .auri-photo-colares { object-position: center 82%; }
+    .auri-reel-media .auri-photo-riacho { object-position: center 74%; }
     .auri-reel-kicker {
       display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
       font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(247,240,230,0.52);
@@ -930,6 +937,7 @@ export default function App() {
                     tone={product.tone}
                     category={product.category}
                     alt=""
+                    className={product.id === "p2" ? "auri-photo-riacho" : ""}
                     eager
                   />
                 </span>
@@ -951,6 +959,7 @@ export default function App() {
                 tone={product.tone}
                 category={product.category}
                 alt={index === activeHeroIndex ? `${product.name} em fotografia editorial` : ""}
+                className={product.id === "p2" ? "auri-photo-riacho" : ""}
                 eager
               />
             </div>
