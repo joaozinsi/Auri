@@ -89,6 +89,10 @@ const GlobalStyle = () => (
   <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Italiana&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
 
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #171411; }
+    #root { min-height: 100%; }
+
     .auri {
       --paper: #EFE9DD;
       --paper-2: #F8F5EE;
@@ -477,6 +481,282 @@ const GlobalStyle = () => (
       .auri-pay-options { flex-direction: column; }
       .auri-news-form { min-width: 0; width: 100%; }
     }
+
+    /* ---------- editorial refresh inspired by Mosaicist's rhythm ---------- */
+    .auri {
+      --paper: #E7DDD0;
+      --paper-2: #F7F0E6;
+      --ink: #171411;
+      --ink-soft: #746B60;
+      --bronze: #B98254;
+      --bronze-dark: #91613F;
+      --patina: #51624F;
+      --patina-light: #72846E;
+      --line: rgba(247,240,230,0.18);
+      --dark-line: rgba(23,20,17,0.16);
+      --gold: #D1B36D;
+      background: var(--ink);
+    }
+
+    .auri h1, .auri h2, .auri h3, .auri .disp { letter-spacing: 0; }
+    .auri-wrap { max-width: 1480px; padding: 0 46px; }
+
+    @keyframes auri-rise {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes auri-hero-drift {
+      from { transform: scale(1.03) translate3d(0, 0, 0); }
+      to { transform: scale(1.1) translate3d(-1.5%, 1%, 0); }
+    }
+    @keyframes auri-shimmer-line {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(100%); }
+    }
+
+    .auri-nav {
+      position: fixed; left: 0; right: 0; top: 0;
+      background: linear-gradient(180deg, rgba(23,20,17,0.82), rgba(23,20,17,0.2));
+      color: var(--paper-2); border-bottom: 1px solid rgba(247,240,230,0.1);
+      backdrop-filter: blur(12px);
+    }
+    .auri-nav-inner { max-width: 1480px; padding: 24px 46px; }
+    .auri-logo { color: var(--paper-2); }
+    .auri-nav-links a { color: rgba(247,240,230,0.82); }
+    .auri-nav-links a::after { background: var(--gold); }
+    .auri-cart-btn {
+      background: rgba(247,240,230,0.12); color: var(--paper-2);
+      border: 1px solid rgba(247,240,230,0.22);
+    }
+    .auri-cart-btn:hover { background: var(--paper-2); color: var(--ink); }
+
+    .auri-hero {
+      position: relative; display: block; min-height: 92svh; overflow: hidden;
+      isolation: isolate; background: var(--ink); color: var(--paper-2);
+    }
+    .auri-hero::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 34%;
+      height: 1px; background: rgba(247,240,230,0.18); z-index: 1;
+    }
+    .auri-hero-media {
+      position: absolute; inset: 0; z-index: -2; overflow: hidden;
+    }
+    .auri-hero-media::after {
+      content: ""; position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(90deg, rgba(23,20,17,0.94) 0%, rgba(23,20,17,0.54) 45%, rgba(23,20,17,0.25) 100%),
+        linear-gradient(0deg, rgba(23,20,17,0.84) 0%, rgba(23,20,17,0.12) 46%, rgba(23,20,17,0.42) 100%);
+    }
+    .auri-hero-media .auri-photo {
+      width: 100%; height: 100%; object-fit: cover; object-position: center 46%;
+      filter: saturate(0.9) contrast(1.08); animation: auri-hero-drift 18s ease-in-out infinite alternate;
+    }
+    .auri-hero-copy {
+      min-height: 92svh; display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      align-content: end; align-items: end; gap: 20px 64px;
+      padding: 132px 46px 48px; color: var(--paper-2);
+    }
+    .auri-hero-copy .eyebrow {
+      grid-column: 1 / 2; align-self: start; color: rgba(247,240,230,0.72);
+      animation: auri-rise 0.7s ease both;
+    }
+    .auri-hero-copy h1 {
+      grid-column: 1 / 2; max-width: 980px;
+      font-family: 'Jost', sans-serif; font-size: 112px; line-height: 0.88;
+      font-weight: 300; color: var(--paper-2); animation: auri-rise 0.8s 0.08s ease both;
+    }
+    .auri-hero-copy h1 em {
+      display: inline-block; font-family: 'Italiana', serif; font-style: italic;
+      color: var(--paper-2);
+    }
+    .auri-hero-sub {
+      grid-column: 2 / 3; max-width: 320px; color: rgba(247,240,230,0.78);
+      font-size: 15px; animation: auri-rise 0.8s 0.16s ease both;
+    }
+    .auri .auri-hero-cta {
+      grid-column: 2 / 3; background: var(--paper-2); color: var(--ink);
+      padding: 14px 22px; border: 1px solid rgba(247,240,230,0.2);
+      animation: auri-rise 0.8s 0.22s ease both;
+    }
+    .auri .auri-hero-cta:hover { background: var(--gold); color: var(--ink); transform: translateX(4px); }
+    .auri-hero-stats {
+      position: absolute; right: 46px; top: 124px; z-index: 2;
+      flex-direction: column; gap: 18px; color: var(--paper-2);
+    }
+    .auri-hero-stats div strong { color: var(--gold); }
+    .auri-hero-stats div span { color: rgba(247,240,230,0.7); }
+    .auri-hero-tag {
+      left: 46px; top: 124px; bottom: auto; background: rgba(23,20,17,0.28);
+      color: rgba(247,240,230,0.82); border-left: 1px solid var(--gold);
+      backdrop-filter: blur(10px);
+    }
+
+    .auri-marquee-band {
+      background: var(--ink); border-color: rgba(247,240,230,0.18);
+      color: var(--paper-2); padding: 18px 0;
+    }
+    .auri-marquee-track span { color: rgba(247,240,230,0.72); }
+
+    .auri-section {
+      background: var(--paper); color: var(--ink); padding: 118px 0;
+    }
+    .auri-section-head {
+      display: grid; grid-template-columns: minmax(0, 1fr) 360px; align-items: end;
+      border-bottom: 1px solid var(--dark-line); padding-bottom: 34px; margin-bottom: 46px;
+    }
+    .auri-section-head h2 {
+      font-family: 'Jost', sans-serif; font-size: 74px; line-height: 0.98; font-weight: 300;
+    }
+    .auri-section-head p { color: var(--ink-soft); }
+    .auri-section .eyebrow { color: var(--bronze-dark); }
+
+    .auri-filter { margin-bottom: 34px; }
+    .auri-filter button {
+      border-color: var(--dark-line); border-radius: 2px; background: rgba(247,240,230,0.35);
+    }
+
+    .auri-grid { grid-template-columns: repeat(12, 1fr); gap: 26px; }
+    .auri-card { grid-column: span 3; gap: 14px; }
+    .auri-card.featured { grid-column: span 6; grid-row: span 2; }
+    .auri-card:nth-child(3),
+    .auri-card:nth-child(6) { margin-top: 72px; }
+    .auri-card-media {
+      background: #D8CCBA; border: 1px solid var(--dark-line);
+      aspect-ratio: 3 / 4; border-radius: 3px;
+    }
+    .auri-card.featured .auri-card-media { aspect-ratio: 1 / 1.02; }
+    .auri-card-info {
+      display: grid; grid-template-columns: 1fr auto; gap: 2px 16px;
+      border-top: 1px solid var(--dark-line); padding-top: 12px;
+    }
+    .auri-card-info .brand { grid-column: 1 / 3; }
+    .auri-card-info .name { font-size: 22px; margin: 0; }
+    .auri-card-info .price { align-self: center; }
+    .auri-quick-add { background: var(--paper-2); border-color: rgba(23,20,17,0.22); }
+
+    .auri-checkout-section {
+      position: relative; min-height: 88svh; overflow: hidden;
+      background: var(--ink); color: var(--paper-2); display: flex; align-items: center;
+    }
+    .auri-checkout-section::after {
+      content: ""; position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(90deg, rgba(23,20,17,0.92) 0%, rgba(23,20,17,0.66) 48%, rgba(23,20,17,0.28) 100%),
+        linear-gradient(0deg, rgba(23,20,17,0.82) 0%, rgba(23,20,17,0.05) 55%, rgba(23,20,17,0.68) 100%);
+    }
+    .auri-checkout-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      opacity: 0.55; filter: saturate(0.82) contrast(1.08);
+      animation: auri-hero-drift 22s ease-in-out infinite alternate;
+    }
+    .auri-checkout-section .auri-wrap { position: relative; z-index: 2; width: 100%; }
+    .auri-checkout-grid { grid-template-columns: minmax(0, 1fr) 410px; gap: 72px; }
+    .auri-checkout-section h2 {
+      font-family: 'Jost', sans-serif; font-size: 72px; line-height: 0.98; font-weight: 300;
+      max-width: 780px;
+    }
+    .auri-checkout-section p.lead { max-width: 420px; margin-top: 18px; }
+    .auri-checkout-list {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+      border-top: 1px solid rgba(247,240,230,0.24); padding-top: 24px;
+    }
+    .auri-checkout-list li { display: block; }
+    .auri-checkout-list .n { margin-bottom: 12px; }
+    .auri-mock {
+      border-radius: 4px; background: rgba(247,240,230,0.92);
+      border: 1px solid rgba(247,240,230,0.36); backdrop-filter: blur(14px);
+    }
+
+    .auri-about {
+      grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.8fr); gap: 72px;
+    }
+    .auri-about-media {
+      order: 2; border-radius: 3px; border: 1px solid var(--dark-line);
+    }
+    .auri-about-copy { order: 1; }
+    .auri-about-copy h2 {
+      font-family: 'Jost', sans-serif; font-size: 68px; line-height: 1; font-weight: 300;
+      max-width: 760px;
+    }
+    .auri-about-copy p { font-size: 17px; max-width: 620px; }
+
+    .auri-newsletter {
+      background: var(--paper-2); color: var(--ink); border-top: 1px solid var(--dark-line);
+    }
+    .auri-newsletter h2 {
+      color: var(--ink); font-family: 'Jost', sans-serif; font-size: 44px; line-height: 1.05; font-weight: 300;
+      max-width: 620px;
+    }
+    .auri-news-form { border-bottom-color: rgba(23,20,17,0.3); }
+    .auri-news-form input { color: var(--ink); }
+    .auri-news-form input::placeholder { color: rgba(23,20,17,0.45); }
+    .auri-news-form button { color: var(--ink); }
+    .auri-news-status { color: var(--ink-soft); }
+
+    .auri-footer {
+      background: var(--ink); color: var(--paper-2); padding-top: 70px;
+    }
+    .auri-footer-col h4 { color: var(--gold); }
+    .auri-footer-col a, .auri-footer-col p, .auri-footer-static { color: rgba(247,240,230,0.72); }
+    .auri-footer-bottom { border-top-color: rgba(247,240,230,0.14); color: rgba(247,240,230,0.62); }
+
+    @media (min-width: 1440px) {
+      .auri-hero-copy h1 { font-size: 138px; }
+      .auri-section-head h2,
+      .auri-checkout-section h2 { font-size: 88px; }
+    }
+    @media (max-width: 980px) {
+      .auri-wrap { padding: 0 26px; }
+      .auri-nav-inner { padding: 18px 26px; }
+      .auri-hero { min-height: 90svh; }
+      .auri-hero::after { bottom: 38%; }
+      .auri-hero-copy {
+        min-height: 90svh; grid-template-columns: 1fr; padding: 116px 26px 38px;
+        gap: 16px;
+      }
+      .auri-hero-copy h1 { grid-column: 1; font-size: 82px; }
+      .auri-hero-sub,
+      .auri .auri-hero-cta { grid-column: 1; }
+      .auri-hero-stats { position: static; flex-direction: row; margin-top: 8px; }
+      .auri-hero-tag { top: 112px; left: 26px; }
+      .auri-section-head,
+      .auri-checkout-grid,
+      .auri-about { grid-template-columns: 1fr; }
+      .auri-section-head h2,
+      .auri-checkout-section h2,
+      .auri-about-copy h2 { font-size: 56px; }
+      .auri-grid { grid-template-columns: repeat(2, 1fr); }
+      .auri-card,
+      .auri-card.featured { grid-column: span 1; }
+      .auri-card:nth-child(3),
+      .auri-card:nth-child(6) { margin-top: 0; }
+      .auri-checkout-list { grid-template-columns: 1fr; }
+      .auri-about-media { order: 1; }
+      .auri-about-copy { order: 2; }
+    }
+    @media (max-width: 560px) {
+      .auri-wrap { padding: 0 20px; }
+      .auri-nav-inner { padding: 16px 20px; }
+      .auri-hero { min-height: 88svh; }
+      .auri-hero-copy { min-height: 88svh; padding: 106px 20px 32px; }
+      .auri-hero-copy h1 { font-size: 54px; line-height: 0.94; }
+      .auri-hero-sub { font-size: 14px; }
+      .auri-hero-stats { gap: 22px; }
+      .auri-hero-tag { left: 20px; top: 118px; }
+      .auri-section { padding: 78px 0; }
+      .auri-section-head { padding-bottom: 24px; margin-bottom: 30px; }
+      .auri-section-head h2,
+      .auri-checkout-section h2,
+      .auri-about-copy h2,
+      .auri-newsletter h2 { font-size: 38px; }
+      .auri-grid { grid-template-columns: 1fr; gap: 34px; }
+      .auri-card-media,
+      .auri-card.featured .auri-card-media { aspect-ratio: 4 / 5; }
+      .auri-checkout-section { min-height: auto; padding: 78px 0; }
+      .auri-mock { padding: 20px; }
+      .auri-newsletter-inner { display: block; }
+      .auri-news-form { margin-top: 24px; }
+    }
   `}</style>
 );
 
@@ -571,13 +851,13 @@ export default function App() {
         </div>
         <div className="auri-hero-media">
           <ProductMedia
-            src="https://images.unsplash.com/photo-1677466891766-703a8454158d?auto=format&fit=crop&w=1400&q=80"
+            src={asset("colar-coroa.png")}
             tone="ink"
-            category="Anéis"
-            alt="Mão segurando um anel de ouro autoral"
+            category="Colares"
+            alt="Colar Coroa em fotografia editorial"
             eager
           />
-          <div className="auri-hero-tag">Anel Aurora — Studio Vero</div>
+          <div className="auri-hero-tag">Colar Coroa — Cindra Joias</div>
         </div>
       </section>
 
@@ -638,6 +918,13 @@ export default function App() {
 
       {/* CHECKOUT SHOWCASE — signature element */}
       <section className="auri-section auri-checkout-section" id="checkout">
+        <ProductMedia
+          src={asset("colar-riacho.png")}
+          tone="patina"
+          category="Colares"
+          alt=""
+          className="auri-checkout-bg"
+        />
         <div className="auri-wrap">
           <div className="auri-checkout-grid">
             <div>
@@ -681,10 +968,10 @@ export default function App() {
           <div className="auri-about">
             <div className="auri-about-media">
               <ProductMedia
-                src="https://images.unsplash.com/photo-1600721391776-b5cd0e0048f9?auto=format&fit=crop&w=1000&q=80"
+                src={asset("anel-talisma.png")}
                 tone="patina"
-                category="Colares"
-                alt="Pessoa usando colar de ouro autoral"
+                category="Anéis"
+                alt="Anel Talismã em fotografia editorial"
               />
             </div>
             <div className="auri-about-copy">
