@@ -506,8 +506,8 @@ const GlobalStyle = () => (
       to { opacity: 1; transform: translateY(0); }
     }
     @keyframes auri-hero-drift {
-      from { transform: scale(1.04) translate3d(0, -10%, 0); }
-      to { transform: scale(1.11) translate3d(-1.5%, -14%, 0); }
+      from { transform: scale(1.035) translate3d(0, -5%, 0); }
+      to { transform: scale(1.1) translate3d(-1.5%, -8%, 0); }
     }
     @keyframes auri-hero-necklace-drift {
       from { transform: scale(1.16) translate3d(0, -12%, 0); }
@@ -559,11 +559,11 @@ const GlobalStyle = () => (
       width: 100%; height: 100%; object-fit: cover; object-position: center 46%;
       filter: saturate(0.9) contrast(1.08);
     }
-    .auri-hero-media .auri-photo-aneis { object-position: center 68%; }
-    .auri-hero-media .auri-photo-hero-p1 { object-position: center 72%; }
-    .auri-hero-media .auri-photo-hero-p3 { object-position: center 70%; }
-    .auri-hero-media .auri-photo-hero-p5 { object-position: center 68%; }
-    .auri-hero-media .auri-photo-hero-p7 { object-position: center 70%; }
+    .auri-hero-media .auri-photo-aneis { object-position: center 56%; }
+    .auri-hero-media .auri-photo-hero-p1 { object-position: center 58%; }
+    .auri-hero-media .auri-photo-hero-p3 { object-position: center 56%; }
+    .auri-hero-media .auri-photo-hero-p5 { object-position: center 57%; }
+    .auri-hero-media .auri-photo-hero-p7 { object-position: center 58%; }
     .auri-hero-media .auri-photo-colares { object-position: center 100%; }
     .auri-hero-media .auri-photo-riacho { object-position: center 88%; }
     .auri-hero-slide {
