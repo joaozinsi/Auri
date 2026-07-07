@@ -34,7 +34,6 @@ const CATEGORY_COUNTS = CATEGORIES.reduce((counts, category) => {
 }, {});
 
 const currency = (n) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-const SHIPPING_FEE = 24;
 
 /* ------------------------------------------------------------------ */
 /*  Ilustrações (SVG próprio — não depende de imagens externas)        */
@@ -767,10 +766,8 @@ const GlobalStyle = () => (
 export default function App() {
   const [cart, setCart] = useState({}); // { id: qty }
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [placed, setPlaced] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [newsletterSent, setNewsletterSent] = useState(false);
-  const [form, setForm] = useState({ nome: "", email: "", endereco: "", cidade: "", cep: "", pagamento: "pix" });
 
   const addToCart = (id) => {
     setCart((c) => ({ ...c, [id]: (c[id] || 0) + 1 }));
@@ -796,21 +793,25 @@ export default function App() {
   );
   const cartCount = cartItems.reduce((s, i) => s + i.qty, 0);
   const subtotal = cartItems.reduce((s, i) => s + i.qty * i.price, 0);
-  const shipping = cartItems.length > 0 ? SHIPPING_FEE : 0;
-  const total = subtotal + shipping;
+  const whatsappHref = useMemo(() => {
+    if (cartItems.length === 0) return "https://wa.me/";
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (cartItems.length === 0) return;
-    setPlaced(true);
-  };
+    const itemLines = cartItems.map(
+      (item) => `- ${item.qty}x ${item.name} (${item.brand}) - ${currency(item.price * item.qty)}`
+    );
+    const message = [
+      "Olá, quero finalizar minha compra na Auri.",
+      "",
+      "Minha sacola:",
+      ...itemLines,
+      "",
+      `Subtotal: ${currency(subtotal)}`,
+      "",
+      "Quero combinar entrega e pagamento pelo WhatsApp.",
+    ].join("\n");
 
-  const resetCheckout = () => {
-    setCart({});
-    setPlaced(false);
-    setDrawerOpen(false);
-    setForm({ nome: "", email: "", endereco: "", cidade: "", cep: "", pagamento: "pix" });
-  };
+    return `https://wa.me/?text=${encodeURIComponent(message)}`;
+  }, [cartItems, subtotal]);
 
   return (
     <div className="auri">
@@ -1035,25 +1036,18 @@ export default function App() {
         <div className="auri-drawer-head">
           <div>
             <h3>Sua sacola</h3>
-            <span className="auri-drawer-badge"><Check size={12} /> Checkout em 1 tela</span>
+            <span className="auri-drawer-badge"><Check size={12} /> Finalização no WhatsApp</span>
           </div>
           <button type="button" onClick={() => setDrawerOpen(false)} aria-label="Fechar"><X size={20} /></button>
         </div>
 
         <div className="auri-drawer-body">
-          {placed ? (
-            <div className="auri-success">
-              <div className="icon"><Check size={26} /></div>
-              <h3>Pedido confirmado</h3>
-              <p>Obrigado, {form.nome || "cliente"}. Cada ateliê envia a peça diretamente para você — o prazo chega por e-mail.</p>
-              <button type="button" className="auri-checkout-submit" style={{ marginTop: 26 }} onClick={resetCheckout}>Voltar à loja</button>
-            </div>
-          ) : cartItems.length === 0 ? (
+          {cartItems.length === 0 ? (
             <div className="auri-drawer-empty">
               Sua sacola está vazia.<br />Escolha uma peça na coleção para começar.
             </div>
           ) : (
-            <form id="auri-checkout-form" onSubmit={handleSubmit}>
+            <>
               {cartItems.map((item) => {
                 return (
                 <div className="auri-cart-item" key={item.id}>
@@ -1078,72 +1072,17 @@ export default function App() {
                 );
               })}
 
-              <div className="auri-drawer-section-title">Entrega</div>
-              <div className="auri-field">
-                <label htmlFor="auri-nome">Nome completo</label>
-                <input id="auri-nome" name="nome" required autoComplete="name" value={form.nome} onChange={(e) => setForm({ ...form, nome: e.target.value })} placeholder="Seu nome" />
-              </div>
-              <div className="auri-field">
-                <label htmlFor="auri-email">E-mail</label>
-                <input id="auri-email" name="email" required type="email" autoComplete="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="seu@email.com" />
-              </div>
-              <div className="auri-field">
-                <label htmlFor="auri-endereco">Endereço</label>
-                <input id="auri-endereco" name="endereco" required autoComplete="street-address" value={form.endereco} onChange={(e) => setForm({ ...form, endereco: e.target.value })} placeholder="Rua, número, bairro" />
-              </div>
-              <div className="auri-row2">
-                <div className="auri-field">
-                  <label htmlFor="auri-cidade">Cidade</label>
-                  <input id="auri-cidade" name="cidade" required autoComplete="address-level2" value={form.cidade} onChange={(e) => setForm({ ...form, cidade: e.target.value })} placeholder="Cidade" />
-                </div>
-                <div className="auri-field">
-                  <label htmlFor="auri-cep">CEP</label>
-                  <input
-                    id="auri-cep"
-                    name="cep"
-                    required
-                    inputMode="numeric"
-                    autoComplete="postal-code"
-                    pattern="[0-9]{5}-?[0-9]{3}"
-                    value={form.cep}
-                    onChange={(e) => setForm({ ...form, cep: e.target.value })}
-                    placeholder="00000-000"
-                  />
-                </div>
-              </div>
-
-              <div className="auri-drawer-section-title">Pagamento</div>
-              <div className="auri-pay-options">
-                <label>
-                  <input type="radio" name="pagamento" checked={form.pagamento === "pix"} onChange={() => setForm({ ...form, pagamento: "pix" })} />
-                  <span>Pix</span>
-                </label>
-                <label>
-                  <input type="radio" name="pagamento" checked={form.pagamento === "cartao"} onChange={() => setForm({ ...form, pagamento: "cartao" })} />
-                  <span>Cartão</span>
-                </label>
-                <label>
-                  <input type="radio" name="pagamento" checked={form.pagamento === "boleto"} onChange={() => setForm({ ...form, pagamento: "boleto" })} />
-                  <span>Boleto</span>
-                </label>
-              </div>
-
               <div style={{ height: 90 }} />
-            </form>
+            </>
           )}
         </div>
 
-        {!placed && cartItems.length > 0 && (
+        {cartItems.length > 0 && (
           <div className="auri-drawer-foot">
-            <div className="auri-drawer-fees">
-              <div><span>Subtotal</span><span>{currency(subtotal)}</span></div>
-              <div><span>Entrega estimada</span><span>{currency(shipping)}</span></div>
-            </div>
-            <div className="auri-drawer-total"><span>Total</span><span>{currency(total)}</span></div>
-            <button className="auri-checkout-submit" type="submit" form="auri-checkout-form">
-              Finalizar compra <ArrowRight size={15} />
-            </button>
-            <div className="auri-drawer-note">Entrega calculada por ateliê · sem taxas escondidas</div>
+            <a className="auri-checkout-submit" href={whatsappHref} target="_blank" rel="noreferrer">
+              Finalizar no WhatsApp <ArrowRight size={15} />
+            </a>
+            <div className="auri-drawer-note">A mensagem do pedido abre pronta no WhatsApp.</div>
           </div>
         )}
       </aside>
