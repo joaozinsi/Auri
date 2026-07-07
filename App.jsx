@@ -62,6 +62,7 @@ function ArtPanel({ tone = "bronze", className = "", children }) {
 function ProductMedia({ src, tone, category, alt, className = "", eager = false }) {
   const [failed, setFailed] = useState(false);
   const Icon = ICONS[category] || RingIcon;
+  const categoryClass = category === "Colares" ? "auri-photo-colares" : "auri-photo-aneis";
   if (failed || !src) {
     return (
       <ArtPanel tone={tone} className={className}>
@@ -73,7 +74,7 @@ function ProductMedia({ src, tone, category, alt, className = "", eager = false 
     <img
       src={src}
       alt={alt}
-      className={`auri-photo ${className}`}
+      className={`auri-photo ${categoryClass} ${className}`}
       loading={eager ? "eager" : "lazy"}
       onError={() => setFailed(true)}
     />
@@ -508,6 +509,10 @@ const GlobalStyle = () => (
       from { transform: scale(1.03) translate3d(0, 0, 0); }
       to { transform: scale(1.1) translate3d(-1.5%, 1%, 0); }
     }
+    @keyframes auri-hero-necklace-drift {
+      from { transform: scale(1.16) translate3d(0, -12%, 0); }
+      to { transform: scale(1.24) translate3d(-1.2%, -18%, 0); }
+    }
     @keyframes auri-shimmer-line {
       from { transform: translateX(-100%); }
       to { transform: translateX(100%); }
@@ -550,12 +555,14 @@ const GlobalStyle = () => (
       width: 100%; height: 100%; object-fit: cover; object-position: center 46%;
       filter: saturate(0.9) contrast(1.08);
     }
+    .auri-hero-media .auri-photo-colares { object-position: center 100%; }
     .auri-hero-slide {
       position: absolute; inset: 0; opacity: 0; transform: scale(1.01);
       transition: opacity 1.1s ease, transform 1.1s ease;
     }
     .auri-hero-slide.active { opacity: 1; transform: scale(1); z-index: 1; }
     .auri-hero-slide.active .auri-photo { animation: auri-hero-drift 5.2s ease-in-out both; }
+    .auri-hero-slide.active .auri-photo-colares { animation-name: auri-hero-necklace-drift; }
     .auri-hero-reel {
       position: absolute; left: 46px; right: 46px; bottom: 24px; z-index: 4;
       display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 9px;
@@ -581,6 +588,7 @@ const GlobalStyle = () => (
       display: block; height: 58px; margin-bottom: 7px; overflow: hidden; background: rgba(247,240,230,0.1);
     }
     .auri-reel-media .auri-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .auri-reel-media .auri-photo-colares { object-position: center 82%; }
     .auri-reel-kicker {
       display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
       font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(247,240,230,0.52);
