@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { ShoppingBag, X, Plus, Minus, ArrowRight, Check, Instagram } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
@@ -548,12 +548,52 @@ const GlobalStyle = () => (
     }
     .auri-hero-media .auri-photo {
       width: 100%; height: 100%; object-fit: cover; object-position: center 46%;
-      filter: saturate(0.9) contrast(1.08); animation: auri-hero-drift 18s ease-in-out infinite alternate;
+      filter: saturate(0.9) contrast(1.08);
     }
+    .auri-hero-slide {
+      position: absolute; inset: 0; opacity: 0; transform: scale(1.01);
+      transition: opacity 1.1s ease, transform 1.1s ease;
+    }
+    .auri-hero-slide.active { opacity: 1; transform: scale(1); z-index: 1; }
+    .auri-hero-slide.active .auri-photo { animation: auri-hero-drift 5.2s ease-in-out both; }
+    .auri-hero-reel {
+      position: absolute; left: 46px; right: 46px; bottom: 24px; z-index: 4;
+      display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 9px;
+    }
+    .auri-hero-reel-card {
+      position: relative; min-width: 0; height: 108px; padding: 6px;
+      border: 1px solid rgba(247,240,230,0.18); background: rgba(23,20,17,0.32);
+      color: rgba(247,240,230,0.78); text-align: left; overflow: hidden;
+      backdrop-filter: blur(10px); transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+    }
+    .auri-hero-reel-card::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+      background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.25s ease;
+    }
+    .auri-hero-reel-card.active {
+      border-color: rgba(209,179,109,0.9); background: rgba(247,240,230,0.1);
+      transform: translateY(-3px);
+    }
+    .auri-hero-reel-card.active::after {
+      transform: scaleX(1); animation: auri-reel-progress 5.2s linear both;
+    }
+    .auri-reel-media {
+      display: block; height: 58px; margin-bottom: 7px; overflow: hidden; background: rgba(247,240,230,0.1);
+    }
+    .auri-reel-media .auri-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .auri-reel-kicker {
+      display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+      font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(247,240,230,0.52);
+    }
+    .auri-reel-name {
+      display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+      font-family: 'Italiana', serif; font-size: 17px; line-height: 1.05; color: var(--paper-2);
+    }
+    @keyframes auri-reel-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
     .auri-hero-copy {
       min-height: 92svh; display: grid; grid-template-columns: minmax(0, 1fr) 340px;
       align-content: end; align-items: end; gap: 20px 64px;
-      padding: 132px 46px 48px; color: var(--paper-2);
+      padding: 132px 46px 168px; color: var(--paper-2); position: relative; z-index: 2;
     }
     .auri-hero-copy .eyebrow {
       grid-column: 1 / 2; align-self: start; color: rgba(247,240,230,0.72);
@@ -579,13 +619,13 @@ const GlobalStyle = () => (
     }
     .auri .auri-hero-cta:hover { background: var(--gold); color: var(--ink); transform: translateX(4px); }
     .auri-hero-stats {
-      position: absolute; right: 46px; top: 124px; z-index: 2;
+      position: absolute; right: 46px; top: 182px; z-index: 2;
       flex-direction: column; gap: 18px; color: var(--paper-2);
     }
     .auri-hero-stats div strong { color: var(--gold); }
     .auri-hero-stats div span { color: rgba(247,240,230,0.7); }
     .auri-hero-tag {
-      left: 46px; top: 124px; bottom: auto; background: rgba(23,20,17,0.28);
+      left: auto; right: 46px; top: 124px; bottom: auto; background: rgba(23,20,17,0.28);
       color: rgba(247,240,230,0.82); border-left: 1px solid var(--gold);
       backdrop-filter: blur(10px);
     }
@@ -710,14 +750,19 @@ const GlobalStyle = () => (
       .auri-hero { min-height: 90svh; }
       .auri-hero::after { bottom: 38%; }
       .auri-hero-copy {
-        min-height: 90svh; grid-template-columns: 1fr; padding: 116px 26px 38px;
+        min-height: 90svh; grid-template-columns: 1fr; padding: 116px 26px 150px;
         gap: 16px;
       }
       .auri-hero-copy h1 { grid-column: 1; font-size: 82px; }
       .auri-hero-sub,
       .auri .auri-hero-cta { grid-column: 1; }
       .auri-hero-stats { position: static; flex-direction: row; margin-top: 8px; }
-      .auri-hero-tag { top: 112px; left: 26px; }
+      .auri-hero-tag { top: 112px; left: 26px; right: auto; }
+      .auri-hero-reel { left: 26px; right: 26px; bottom: 20px; gap: 7px; }
+      .auri-hero-reel-card { height: 88px; padding: 4px; }
+      .auri-reel-media { height: 78px; margin-bottom: 0; }
+      .auri-reel-kicker,
+      .auri-reel-name { display: none; }
       .auri-section-head,
       .auri-checkout-grid,
       .auri-about { grid-template-columns: 1fr; }
@@ -737,11 +782,14 @@ const GlobalStyle = () => (
       .auri-wrap { padding: 0 20px; }
       .auri-nav-inner { padding: 16px 20px; }
       .auri-hero { min-height: 88svh; }
-      .auri-hero-copy { min-height: 88svh; padding: 106px 20px 32px; }
+      .auri-hero-copy { min-height: 88svh; padding: 106px 20px 120px; }
       .auri-hero-copy h1 { font-size: 54px; line-height: 0.94; }
       .auri-hero-sub { font-size: 14px; }
-      .auri-hero-stats { gap: 22px; }
-      .auri-hero-tag { left: 20px; top: 118px; }
+      .auri-hero-stats { display: none; }
+      .auri-hero-tag { left: 20px; right: auto; top: 118px; }
+      .auri-hero-reel { left: 16px; right: 16px; bottom: 12px; gap: 5px; }
+      .auri-hero-reel-card { height: 74px; padding: 2px; }
+      .auri-reel-media { height: 68px; }
       .auri-section { padding: 78px 0; }
       .auri-section-head { padding-bottom: 24px; margin-bottom: 30px; }
       .auri-section-head h2,
@@ -766,8 +814,17 @@ const GlobalStyle = () => (
 export default function App() {
   const [cart, setCart] = useState({}); // { id: qty }
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [newsletterSent, setNewsletterSent] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveHeroIndex((index) => (index + 1) % PRODUCTS.length);
+    }, 5200);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   const addToCart = (id) => {
     setCart((c) => ({ ...c, [id]: (c[id] || 0) + 1 }));
@@ -793,6 +850,7 @@ export default function App() {
   );
   const cartCount = cartItems.reduce((s, i) => s + i.qty, 0);
   const subtotal = cartItems.reduce((s, i) => s + i.qty * i.price, 0);
+  const activeHeroProduct = PRODUCTS[activeHeroIndex];
   const whatsappHref = useMemo(() => {
     if (cartItems.length === 0) return "https://wa.me/";
 
@@ -849,16 +907,47 @@ export default function App() {
             <div><strong>32</strong><span>Ateliês</span></div>
             <div><strong>100%</strong><span>Peças autorais</span></div>
           </div>
+          <div className="auri-hero-reel" aria-label="Joias em destaque no hero">
+            {PRODUCTS.map((product, index) => (
+              <button
+                type="button"
+                className={`auri-hero-reel-card ${index === activeHeroIndex ? "active" : ""}`}
+                key={product.id}
+                onClick={() => setActiveHeroIndex(index)}
+                aria-label={`Destacar ${product.name}`}
+              >
+                <span className="auri-reel-media">
+                  <ProductMedia
+                    src={product.img}
+                    tone={product.tone}
+                    category={product.category}
+                    alt=""
+                    eager
+                  />
+                </span>
+                <span className="auri-reel-kicker">{product.brand}</span>
+                <span className="auri-reel-name">{product.name}</span>
+              </button>
+            ))}
+          </div>
         </div>
         <div className="auri-hero-media">
-          <ProductMedia
-            src={asset("colar-coroa.png")}
-            tone="ink"
-            category="Colares"
-            alt="Colar Coroa em fotografia editorial"
-            eager
-          />
-          <div className="auri-hero-tag">Colar Coroa — Cindra Joias</div>
+          {PRODUCTS.map((product, index) => (
+            <div
+              className={`auri-hero-slide ${index === activeHeroIndex ? "active" : ""}`}
+              key={product.id}
+              aria-hidden={index !== activeHeroIndex}
+            >
+              <ProductMedia
+                src={product.img}
+                tone={product.tone}
+                category={product.category}
+                alt={index === activeHeroIndex ? `${product.name} em fotografia editorial` : ""}
+                eager
+              />
+            </div>
+          ))}
+          <div className="auri-hero-tag">{activeHeroProduct.name} — {activeHeroProduct.brand}</div>
         </div>
       </section>
 
