@@ -433,11 +433,12 @@ const GlobalStyle = () => (
     }
     .auri-drawer-total { display: flex; justify-content: space-between; font-family: 'Italiana'; font-size: 20px; margin-bottom: 14px; }
     .auri-checkout-submit {
-      width: 100%; background: var(--ink); color: var(--paper-2); border: none; padding: 15px;
+      width: 100%; background: var(--ink); color: #F8F5EE !important; border: none; padding: 15px;
       font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
+      line-height: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
       transition: background 0.2s ease;
     }
+    .auri-checkout-submit svg { color: #F8F5EE; stroke: currentColor; }
     .auri-checkout-submit:hover { background: var(--patina); }
     .auri-drawer-note { font-size: 11px; color: var(--ink-soft); text-align: center; margin-top: 10px; }
 
@@ -1208,7 +1209,7 @@ export default function App() {
         {cartItems.length > 0 && (
           <div className="auri-drawer-foot">
             <a className="auri-checkout-submit" href={whatsappHref} target="_blank" rel="noreferrer">
-              Finalizar no WhatsApp <ArrowRight size={15} />
+              Finalizar no whatsapp <ArrowRight size={15} />
             </a>
             <div className="auri-drawer-note">A mensagem do pedido abre pronta no WhatsApp.</div>
           </div>
